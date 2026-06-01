@@ -1,0 +1,78 @@
+version: "3.9"
+
+services:
+
+  # ── 1. HONEYPOT WEB ──────────────────────────────────────
+  honeypot:
+    build: ./honeypot
+    container_name: tfm-honeypot
+    ports:
+      - "8080:8080"
+    volumes:
+      - honeypot-data:/data
+    networks:
+      - tfm-net
+    restart: unless-stopped
+
+  # ── 2. BACKEND IA ─────────────────────────────────────────
+  backend:
+    build: ./backend
+    container_name: tfm-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - honeypot-data:/data
+      - model-data:/model
+      - reports-data:/reports
+      - geoip-data:/geoip
+    environment:
+      - ABUSEIPDB_KEY=${ABUSEIPDB_KEY:-}
+    networks:
+      - tfm-net
+    depends_on:
+      - honeypot
+    restart: unless-stopped
+
+  # ── 3. WORKER — envía logs del honeypot al backend ────────
+  worker:
+    image: python:3.11-slim
+    container_name: tfm-worker
+    command: >
+      sh -c "pip install requests -q &&
+             python /worker/worker.py"
+    volumes:
+      - ./worker:/worker
+      - honeypot-data:/data
+    networks:
+      - tfm-net
+    depends_on:
+      - honeypot
+      - backend
+    restart: unless-stopped
+
+  # ── 4. GRAFANA DASHBOARD ──────────────────────────────────
+  grafana:
+    image: grafana/grafana:10.2.3
+    container_name: tfm-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-tfm2024}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - tfm-net
+    restart: unless-stopped
+
+volumes:
+  honeypot-data:
+  model-data:
+  reports-data:
+  geoip-data:
+  grafana-data:
+
+networks:
+  tfm-net:
+    driver: bridge
