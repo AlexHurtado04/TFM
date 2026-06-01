@@ -1,0 +1,85 @@
+{
+  "best_model": "Random Forest",
+  "f1_macro_val": 1.0,
+  "f1_macro_test": 1.0,
+  "all_models": {
+    "Random Forest": 1.0,
+    "XGBoost": 1.0,
+    "SVM": 1.0,
+    "MLP": 1.0
+  },
+  "confusion_matrix": [
+    [
+      90,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      90,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      90,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      90,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      90,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      90,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      90
+    ]
+  ],
+  "labels": [
+    "Normal",
+    "SQL Injection",
+    "XSS",
+    "Path Traversal",
+    "Command Injection",
+    "Brute Force",
+    "Scanner/Bot"
+  ]
+}
