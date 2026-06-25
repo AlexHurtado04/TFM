@@ -1,133 +1,233 @@
-# TFM — Sistema WAF/Honeypot con clasificación de ataques mediante IA
+# AI-Powered Honeypot & Incident Response System
 
-**Alejandro Hurtado Ramírez — Curso Profesional de Ciberseguridad — UNIR**
+![banner](docs/images/banner.png)
 
----
-
-## ⚠️ Aviso legal
-
-Este sistema está diseñado **exclusivamente para uso académico y en entorno local controlado**.
-Todos los ataques simulados se realizan **únicamente contra la infraestructura Docker de este proyecto**.
-Queda prohibido su uso contra sistemas de terceros o en producción.
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![Docker](https://img.shields.io/badge/docker-containerized-blue)
+![Status](https://img.shields.io/badge/status-completed-brightgreen)
+![Security](https://img.shields.io/badge/cybersecurity-blueviolet)
+![ML](https://img.shields.io/badge/machine%20learning-Random%20Forest-orange)
 
 ---
 
-## Arquitectura
+Sistema de detección y respuesta a incidentes basado en honeypot e inteligencia artificial, desarrollado como Trabajo Fin de Máster (TFM).
 
-```
-[Tú / Kali Linux]
-      │
-      │  HTTP (ataques simulados)
-      ▼
-┌─────────────────┐     logs      ┌──────────────────┐
-│  Honeypot web   │ ────────────► │  Backend FastAPI  │
-│  :8080          │               │  + Modelo IA      │
-│  (endpoints     │               │  :8000            │
-│   trampa)       │               │                   │
-└─────────────────┘               │  Geolocalización  │
-                                  │  Informe PDF       │
-                                  └──────────────────┘
-                                          │
-                                          ▼
-                                  ┌──────────────────┐
-                                  │  Grafana          │
-                                  │  Dashboard :3000  │
-                                  └──────────────────┘
-```
+El objetivo del proyecto es demostrar la viabilidad de una plataforma de ciberseguridad capaz de **detectar, clasificar y responder automáticamente a ataques en tiempo real** utilizando únicamente herramientas open source.
 
 ---
 
-## Requisitos
+## 🚀 Vista general
 
-- Docker + Docker Compose
-- Python 3.11 (para entrenar el modelo)
-- 4 GB RAM mínimo
-- Kali Linux (máquina atacante)
+![Arquitectura](docs/images/arquitectura.png)
+
+Plataforma completa desplegada con Docker Compose que integra:
+
+- Simulación de ataques (Red Team)
+- Detección mediante Machine Learning
+- Respuesta automática (Blue Team)
+- Monitorización y visualización en tiempo real
 
 ---
 
-## Instalación paso a paso
+## 🧠 Características
 
-### 1. Clonar el repositorio
+- Honeypot web realista (Flask)
+- Detección automática de tráfico malicioso
+- Clasificación con Machine Learning
+- Respuesta automática en tiempo real
+- Bloqueo dinámico de IPs
+- Geolocalización de atacantes (GeoLite2)
+- Generación automática de informes PDF
+- Dashboard de monitorización (Grafana)
+- Simulación de ataques Red Team
+- Mapeo MITRE ATT&CK
+- Arquitectura completamente dockerizada
+
+---
+
+## 🏗️ Arquitectura
+
+### Honeypot (Flask)
+Endpoints trampa:
+- `/admin`
+- `/login`
+- `/wp-login`
+- `/.env`
+- `/phpmyadmin`
+- `/config.php`
+
+Captura y registra toda la actividad sospechosa.
+
+---
+
+### Backend (FastAPI)
+
+- Procesamiento de eventos en tiempo real
+- Inferencia del modelo de ML
+- Geolocalización de IPs
+- Generación de informes PDF
+- API REST
+
+---
+
+### Worker
+
+- Procesa logs cada 3 segundos
+- Conecta honeypot ↔ backend
+- Envío de eventos en tiempo real
+
+---
+
+### Grafana
+
+- Métricas en tiempo real
+- Incidentes detectados
+- Distribución de ataques
+- Visualización geográfica
+
+---
+
+## 🤖 Machine Learning
+
+Modelos evaluados:
+
+- Random Forest ✅ (seleccionado)
+- XGBoost
+- SVM
+- MLP
+
+### Dataset
+
+- 4.200 muestras sintéticas
+- Balanceado con SMOTE
+- 14 features HTTP
+
+### Features
+
+- URL length
+- Payload entropy
+- User-Agent
+- Request frequency per IP
+- SQLi indicators
+- XSS indicators
+- Path Traversal
+- Command Injection
+
+### Clases
+
+- Normal
+- SQL Injection
+- XSS
+- Path Traversal
+- Command Injection
+- Brute Force
+- Scanner / Bot
+
+---
+
+## ⚔️ Red Team Simulation
+
+Herramientas utilizadas:
+
+- Nmap
+- Nikto
+- SQLMap
+- Hydra
+- Searchsploit
+- Curl manual attacks
+
+### MITRE ATT&CK
+
+| Técnica | Descripción |
+|----------|-------------|
+| T1595 | Active Scanning |
+| T1190 | Exploit Public-Facing Application |
+| T1110 | Brute Force |
+
+---
+
+## 🛡️ Blue Team Response
+
+| Confianza | Acción |
+|----------|--------|
+| ≥ 90% | Bloqueo automático de IP |
+| 70–89% | Alerta en dashboard |
+| < 70% | Registro para análisis |
+
+Cada incidente genera:
+
+- Clasificación automática
+- Evidencia del ataque
+- Geolocalización
+- Informe PDF
+
+---
+
+## 📊 Resultados
+
+- +427 incidentes detectados
+- 399 informes PDF generados
+- 102 alertas registradas
+- 7 IPs bloqueadas automáticamente
+- 7 tipos de ataque clasificados
+- Integración MITRE ATT&CK
+
+---
+
+## ⚠️ Limitaciones
+
+Hydra puede clasificarse como Scanner/Bot debido al peso del User-Agent en el modelo.
+
+### Trabajo futuro:
+- Dataset real
+- Rebalanceo de clases
+- Feature engineering avanzado
+- Nuevos modelos
+
+---
+
+## 🧰 Tecnologías
+
+Python · Flask · FastAPI · Scikit-learn · Docker · Grafana · GeoLite2 · Pandas · NumPy · Kali Linux
+
+---
+
+## ⚙️ Instalación
+
 ```bash
 git clone https://github.com/AlexHurtado04/TFM.git
 cd TFM
-```
-
-### 2. Crear el archivo .env
-```bash
-cp .env.example .env
-# Edita .env y añade tu API key de AbuseIPDB
-```
-
-### 3. Descargar las bases de datos GeoLite2 (MaxMind)
-- Regístrate gratis en https://www.maxmind.com/en/geolite2/signup
-- Descarga **GeoLite2-City.mmdb** y **GeoLite2-ASN.mmdb**
-- Cópialos a la carpeta `geoip/`:
-```bash
-mkdir -p geoip
-cp ~/Descargas/GeoLite2-City.mmdb geoip/
-cp ~/Descargas/GeoLite2-ASN.mmdb geoip/
-```
-
-### 4. Entrenar el modelo de IA
-```bash
-cd backend
-pip install -r requirements.txt
-python train_model.py
-cd ..
-```
-
-### 5. Arrancar todos los servicios
-```bash
-docker compose up --build -d
-```
-
-### 6. Verificar que todo está activo
-```bash
-docker compose ps
+docker compose up --build
 ```
 
 ---
 
-## URLs del sistema
+## 🌐 Servicios
 
-| Servicio | URL | Descripción |
-|---|---|---|
-| Honeypot | http://localhost:8080 | Web señuelo |
-| Backend IA | http://localhost:8000 | API de clasificación |
-| Dashboard | http://localhost:3000 | Grafana (admin/tfm2024) |
-| Informes | `./reports/` | PDFs generados por incidente |
+- Honeypot → http://localhost:5000  
+- API → http://localhost:8000  
+- Grafana → http://localhost:3000  
 
 ---
 
-## Ver logs en tiempo real
+## 📁 Estructura
 
-```bash
-# Worker procesando ataques
-docker logs -f tfm-worker
-
-# Honeypot recibiendo peticiones
-docker logs -f tfm-honeypot
-
-# Backend clasificando
-docker logs -f tfm-backend
+```
+TFM/
+├── honeypot/
+├── backend/
+├── worker/
+├── grafana/
+├── models/
+├── datasets/
+├── reports/
+├── docs/
+└── docker-compose.yml
 ```
 
 ---
 
-## Ver informes generados
+## 👨‍💻 Autor
 
-```bash
-ls -la reports/
-```
-
-Los PDFs se generan automáticamente en la carpeta `reports/` cada vez que el modelo detecta un ataque.
-
----
-
-## Parar el sistema
-
-```bash
-docker compose down
-```
+Alex Hurtado  
+TFM – Máster en Ciberseguridad
