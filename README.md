@@ -226,5 +226,5 @@ TFM/
 
 ## 👨‍💻 Autor
 
-Alex Hurtado  
+Alejandro Hurtado Ramírez
 TFM – Máster en Ciberseguridad
