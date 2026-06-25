@@ -11,7 +11,8 @@ El objetivo del proyecto es demostrar la viabilidad de una plataforma de ciberse
 
 ## 🚀 Vista general
 
-![Arquitectura](docs/images/arquitectura.png)
+<img width="1892" height="652" alt="Captura de pantalla 2026-06-25 154629" src="https://github.com/user-attachments/assets/04ad1adc-b3e7-4525-a0b3-e9a502a0a403" />
+
 
 Plataforma completa desplegada con Docker Compose que integra:
 
