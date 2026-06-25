@@ -1,12 +1,5 @@
 # AI-Powered Honeypot & Incident Response System
 
-![banner](docs/images/banner.png)
-
-![Python](https://img.shields.io/badge/python-3.11-blue)
-![Docker](https://img.shields.io/badge/docker-containerized-blue)
-![Status](https://img.shields.io/badge/status-completed-brightgreen)
-![Security](https://img.shields.io/badge/cybersecurity-blueviolet)
-![ML](https://img.shields.io/badge/machine%20learning-Random%20Forest-orange)
 
 ---
 
